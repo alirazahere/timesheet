@@ -22,4 +22,16 @@ Dashboard
         </div>
     </div>
     <br>
+    <div class="row">
+        <div class="offset-2 col-8">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
 @endsection
