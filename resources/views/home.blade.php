@@ -20,15 +20,6 @@ Dashboard
                 </small>
             </div>
         </div>
-        <div class="col-6">
-            @if($Roles->contains('SuperAdmin'))
-            <div class="text-right">
-                <a href="{{route('home.create')}}" class="btn btn-primary">
-                    <i class="ti-plus"></i> Create New User
-                </a>
-            </div>
-            @endif
-        </div>
     </div>
     <br>
     @if (!$Roles->contains('SuperAdmin'))
