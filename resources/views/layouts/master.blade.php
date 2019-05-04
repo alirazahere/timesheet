@@ -82,6 +82,13 @@
                     <!-- ============================================================== -->
                     <!-- Comment -->
                     <!-- ============================================================== -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                         document.getElementById('logout-form').submit();" ><i class="text-white ti-power-off"></i></a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
                             <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
@@ -128,25 +135,6 @@
                     <!-- ============================================================== -->
                     <!-- End Comment -->
                     <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- User Profile -->
-                    <!-- ============================================================== -->
-                    <li class="nav-item dropdown u-pro">
-                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="hidden-md-down">{{ Auth::user()->name }} &nbsp;<i class="fa fa-angle-down"></i></span> </a>
-                        <div class="dropdown-menu dropdown-menu-right animated flipInY">
-                            <!-- text-->
-                            <div class="dropdown-divider"></div>
-                            <!-- text-->
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
-                            <!-- text-->
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </div>
-                    </li>
-                    <!-- ============================================================== -->
-                    <!-- End User Profile -->
                     <!-- ============================================================== -->
                 </ul>
             </div>
