@@ -22,11 +22,4 @@ Dashboard
         </div>
     </div>
     <br>
-    @if (!$Roles->contains('SuperAdmin'))
-    <div class="row">
-        <div class="col-12">
-           <button class="btn btn-primary">Mark Attendance. <small>{{ $todayDate = date("d/M/y") }}</small></button>
-        </div>
-    </div>
-    @endif
 @endsection

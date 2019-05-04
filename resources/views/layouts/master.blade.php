@@ -158,6 +158,9 @@
                             @if ($Roles->contains('SuperAdmin'))
                                 <li><a href="{{route('home.create')}}"><i class="ti-user"></i> Create New User</a></li>
                             @endif
+                                @if (!$Roles->contains('SuperAdmin'))
+                                    <li><a href="#"><i class="ti-notepad"></i> Mark Attendance</a></li>
+                                @endif
                             <li><a href="index2.html">Analytical</a></li>
                         </ul>
                     </li>
