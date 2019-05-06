@@ -19,3 +19,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/create', 'HomeController@create')->name('home.create');
 Route::post('/home/store', 'HomeController@store')->name('home.store');
+Route::get('/home/getdata', 'HomeController@getdata')->name('home.getdata');
+Route::get('/home/getUser', 'HomeController@getUser')->name('home.getUser');
+Route::post('/home/updateUser', 'HomeController@updateUser')->name('home.updateUser');
+Route::get('/home/deleteUser', 'HomeController@deleteUser')->name('home.deleteUser');

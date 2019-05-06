@@ -13,7 +13,8 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
     <title>@yield('title') - Timesheet</title>
-    <!-- This page CSS -->
+    <!-- Data Table CSS -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <!-- chartist CSS -->
     <link href="{{asset('assets/node_modules/morrisjs/morris.css')}}" rel="stylesheet">
     <!--Toaster Popup message CSS -->
@@ -82,13 +83,6 @@
                     <!-- ============================================================== -->
                     <!-- Comment -->
                     <!-- ============================================================== -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                         document.getElementById('logout-form').submit();" ><i class="text-white ti-power-off"></i></a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
                             <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
@@ -131,6 +125,14 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                         document.getElementById('logout-form').submit();" ><i class="text-white ti-power-off"></i></a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
                     </li>
                     <!-- ============================================================== -->
                     <!-- End Comment -->
@@ -195,6 +197,8 @@
 <!-- Bootstrap popper Core JavaScript -->
 <script src="{{asset('assets/node_modules/popper/popper.min.js')}}"></script>
 <script src="{{asset('assets/node_modules/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<!-- DataTables -->
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 <!-- slimscrollbar scrollbar JavaScript -->
 <script src="{{asset('dist/js/perfect-scrollbar.jquery.min.js')}}"></script>
 <!--Wave Effects -->
@@ -215,6 +219,7 @@
 <!-- Chart JS -->
 {{--<script src="{{asset('dist/js/dashboard1.js')}}"></script>--}}
 <script src="{{asset('assets/node_modules/toast-master/js/jquery.toast.js')}}"></script>
+@stack('script')
 </body>
 
 </html>
