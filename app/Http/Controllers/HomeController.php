@@ -49,8 +49,6 @@ class HomeController extends Controller
             ->make(true);
     }
 
-
-
     protected  function  create(){
         $new_roles = DB::table('roles')->pluck('role','id');
         return view('home.create')->with('Roles',$new_roles);
@@ -158,7 +156,7 @@ class HomeController extends Controller
                                 <input id="date"  name="date" type="date" value="'.date("Y-m-d").'" class="form-control" readonly>
                             </div>
                             <div class="form-group">
-                                <input type="submit" class="btn btn-secondary">
+                                <input type="submit" class="btn btn-outline-purple">
                             </div>
                         </form> ';
         }

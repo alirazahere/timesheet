@@ -21,18 +21,51 @@ Dashboard
             </div>
         </div>
         @if($Roles->contains('User'))
-        <div class="col-6">
-            <div class="text-right">
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Mark Attendance
-                    </button>
-                    <div class="dropdown-menu atd_drop m-t-10 dropdown-menu-right p-3" aria-labelledby="dropdownMenuButton">
-
+            <div class="col-6 text-right">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="text-right">
+                            <div class="dropdown">
+                                <button class="btn text-white btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Request Attendance
+                                </button>
+                                <div class="dropdown-menu request_drop m-t-10 dropdown-menu-right p-3" aria-labelledby="dropdownMenuButton">
+                                    <div class="req_error"></div>
+                                    <form id="req_form">
+                                        {{csrf_field()}}
+                                        <div class="form-group">
+                                            <label for="timeIn">Time IN :</label>
+                                            <input id="timeIn" value="" name="timeIn" type="time" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="timeOut">Time Out :</label>
+                                            <input id="timeOut" name="timeOut" value="" type="time" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="date">Date :</label>
+                                            <input id="date"  name="date" type="date" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Request Attendance" class="btn btn-outline-success">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                 </div>
-              </div>
-        </div>
+                    <div class="col-6">
+                        <div class="text-left">
+                            <div class="dropdown">
+                                <button class="btn text-white btn-purple dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Mark Attendance
+                                </button>
+                                <div class="dropdown-menu atd_drop m-t-10 dropdown-menu-right p-3" aria-labelledby="dropdownMenuButton">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>D
             @endif
     </div>
     <br>
@@ -172,9 +205,9 @@ Dashboard
              @endif
              @if($Roles->contains('User'))
                      get_atd_form();
-              $('#dropdownMenuButton').on('click',function () {
+                     $('#dropdownMenuButton').on('click',function () {
                      get_atd_form();
-             });
+                     });
               $(document).on('submit','#atd_form',function (event) {
                   event.preventDefault();
                   var data = $(this).serialize();
@@ -184,9 +217,35 @@ Dashboard
                       data:data,
                       dataType:'json',
                       success:function (output) {
+                         $('.atd_drop').dropdown('toggle');
                           alert(output);
                       }
                   });
+              });
+              $(document).on('submit','#req_form',function (event) {
+                 event.preventDefault();
+                 var data = $(this).serialize();
+                 $.ajax({
+                     url:'{{route('request.post')}}',
+                     method:'post',
+                     data:data,
+                     dataType:'json',
+                     success:function (output) {
+                        var error_length = output.error.length;
+                         if( error_length > 0 ){
+                            var errors = '';
+                             for (var i = 0 ; i< error_length ; i++){
+                               $error+='<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                                   'User Updated <button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                   '<span aria-hidden="true">&times;</span></button></div>';
+                            }
+                             $('.req_error').html(errors);
+                        }
+                         else{
+                             $('.req_error').html(output.success);
+                         }
+                     }
+                 });
               });
                 function get_atd_form() {
                  $.ajax({

@@ -83,6 +83,7 @@
                     <!-- ============================================================== -->
                     <!-- Comment -->
                     <!-- ============================================================== -->
+                    @if ($Roles->contains('SuperAdmin') && $Roles->contains('Admin') )
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
                             <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
@@ -126,7 +127,7 @@
                             </ul>
                         </div>
                     </li>
-
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                          document.getElementById('logout-form').submit();" ><i class="text-white ti-power-off"></i></a>

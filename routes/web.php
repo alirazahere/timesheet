@@ -25,3 +25,4 @@ Route::post('/home/updateUser', 'HomeController@updateUser')->name('home.updateU
 Route::get('/home/deleteUser', 'HomeController@deleteUser')->name('home.deleteUser');
 Route::get('/home/atd_form', 'HomeController@getAttendanceForm')->name('home.get_atd_form');
 Route::get('/home/mark_attendance', 'HomeController@mark_attendance')->name('home.mark_attendance');
+Route::post('/home/send_req', 'RequestController@postRequest')->name('request.post');
