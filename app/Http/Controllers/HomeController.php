@@ -128,4 +128,94 @@ class HomeController extends Controller
         echo json_encode($output);
     }
 
+
+    protected function getAttendanceForm() {
+            $check_atd = $this->check_today_atd('attendance');
+            $check_time = $this->check_today_atd('check_time');
+        if( $check_atd == 'not marked'){
+            $timeout = '';
+            $timein = '';
+            if ($check_time == 'new attendance')
+            {
+                $timeout ='disabled';
+            }
+            else if ($check_time != 'new attendance'){
+                $timein = 'disabled';
+            }
+            $form = ' <form id="atd_form">
+                          <div class="form-group">
+                             <label for="timeIn">Time IN :</label>
+                             <input id="timeIn" value="'.$check_time.'" name="timeIn" type="time" class="form-control" '.$timein.' required>
+                         </div>
+                            <div class="form-group">
+                                <label for="timeOut">Time Out :</label>
+                                <input id="timeOut" name="timeOut" value="" type="time" class="form-control"
+                                '.$timeout.'
+                                required>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Date :</label>
+                                <input id="date"  name="date" type="date" value="'.date("Y-m-d").'" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-secondary">
+                            </div>
+                        </form> ';
+        }
+        else{
+            $form = 'Your Attendance is marked . <i class="ti-face-smile"></i>';
+        }
+
+           return $form;
+    }
+
+
+    private function check_today_atd($check){
+        date_default_timezone_set("Asia/Karachi");
+      $atd = DB::table('attendances')->select('id','timein','timeout')
+          ->where('user_id',Auth::user()->id)
+          ->where('Date',date('Y-m-d'))
+          ->get();
+
+      if($check == 'attendance'){
+           if(count($atd) > 0 && !empty($atd[0]->timein) && !empty($atd[0]->timeout) ){
+               return 'marked';
+           }
+           else{
+               return 'not marked';
+           }
+       }
+      if($check == 'check_time'){
+          if( empty($atd[0]->timein) && empty($atd[0]->timeout)){
+              return 'new attendance';
+          }
+          else{
+              return $atd[0]->timein;
+          }
+      }
+       return '';
+      }
+
+    protected function mark_attendance(Request $data){
+        if (empty($data->get('timeOut'))){
+          DB::table('attendances')->insert(array(
+            'timein' => $data->get('timeIn'),
+            'timeout'=> '',
+            'Date' => $data->get('date'),
+              'user_id' =>Auth::user()->id
+          ));
+          echo json_encode('Your TimeIn is marked.');
+        }
+        else if (empty($data->get('timeIn'))){
+          DB::table('attendances')->where('user_id',Auth::user()->id)
+              ->where('Date',$data->get('date'))
+              ->update(array(
+           'timeout' => $data->get('timeOut')
+          ));
+          echo json_encode('Your Attendance is marked');
+        }
+        else{
+            echo json_encode('Something went wrong');
+        }
+    }
 }

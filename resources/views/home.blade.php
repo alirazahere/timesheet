@@ -20,9 +20,23 @@ Dashboard
                 </small>
             </div>
         </div>
+        @if($Roles->contains('User'))
+        <div class="col-6">
+            <div class="text-right">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Mark Attendance
+                    </button>
+                    <div class="dropdown-menu atd_drop m-t-10 dropdown-menu-right p-3" aria-labelledby="dropdownMenuButton">
+
+                    </div>
+                 </div>
+              </div>
+        </div>
+            @endif
     </div>
     <br>
-
+    @if($Roles->contains('SuperAdmin') or $Roles->contains('Admin'))
     <div class="row">
         <div class="offset-2 col-8">
             <div class="updateSuccess"></div>
@@ -82,10 +96,12 @@ Dashboard
             </div>
         </div>
     </div>
+    @endif
 @endsection
  @push('script')
      <script>
          $(document).ready(function () {
+             @if($Roles->contains('SuperAdmin') or $Roles->contains('Admin') )
              $('#users_table').DataTable({
                  processing: true,
                  serverSide: true,
@@ -153,6 +169,35 @@ Dashboard
                     });
                 }
              });
+             @endif
+             @if($Roles->contains('User'))
+                     get_atd_form();
+              $('#dropdownMenuButton').on('click',function () {
+                     get_atd_form();
+             });
+              $(document).on('submit','#atd_form',function (event) {
+                  event.preventDefault();
+                  var data = $(this).serialize();
+                  $.ajax({
+                     url:'{{route('home.mark_attendance')}}',
+                      method:'get',
+                      data:data,
+                      dataType:'json',
+                      success:function (output) {
+                          alert(output);
+                      }
+                  });
+              });
+                function get_atd_form() {
+                 $.ajax({
+                     url:'{{route('home.get_atd_form')}}',
+                     method:'get',
+                     success:function (data) {
+                         $('.atd_drop').html(data);
+                     }
+                 });
+              }
+             @endif
          });
      </script>
  @endpush

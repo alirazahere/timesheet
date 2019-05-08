@@ -154,16 +154,12 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                    <li class="nav-small-cap">--- PERSONAL</li>
+                    <li> <a href="{{url('/home')}}" class="waves-effect waves-dark"  aria-expanded="false"><i class="icon-home"></i><span class="hide-menu">Home</span></a>
                     <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Dashboard</span></a>
                         <ul aria-expanded="false" class="collapse">
                             @if ($Roles->contains('SuperAdmin'))
                                 <li><a href="{{route('home.create')}}"><i class="ti-user"></i> Create New User</a></li>
                             @endif
-                                @if (!$Roles->contains('SuperAdmin'))
-                                    <li><a href="#"><i class="ti-notepad"></i> Mark Attendance</a></li>
-                                @endif
-                            <li><a href="index2.html">Analytical</a></li>
                         </ul>
                     </li>
                 </ul>
